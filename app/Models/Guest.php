@@ -11,6 +11,7 @@ class Guest extends Model
     use HasFactory;
     use HasUuids;
 
+    protected $table = 'guest';
     protected $fillable = [
         'first_name',
         'last_name',

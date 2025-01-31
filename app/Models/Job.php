@@ -10,6 +10,7 @@ class Job extends Model
 {
     use HasFactory;
     use HasUuids;
+    protected $table = 'job';
 
     protected $fillable = [
         'title',
