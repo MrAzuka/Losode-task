@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Business;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -63,6 +64,18 @@ class Authentication extends Controller
         } catch (\Throwable $e) {
 
             return $this->sendErrorResponse(500, 'Server Error. Please try again later', $e->getMessage());
+        }
+    }
+
+    public function logout(Request $request)
+    {
+        try {
+            // Revoke the token that was used to authenticate the current request
+            $request->user()->currentAccessToken()->delete();
+
+            return $this->sendSuccessResponse(200, 'Logged out successfully.');
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(500, 'Server Error. Please try again later.', $e->getMessage());
         }
     }
 }

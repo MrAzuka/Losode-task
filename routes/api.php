@@ -23,3 +23,7 @@ Route::prefix('v1')->group(function () {
     Route::post('/register', [Authentication::class, 'register']);
     Route::post('/login', [Authentication::class, 'login']);
 });
+
+Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
+    Route::post('/logout', [Authentication::class, 'logout']);
+});
