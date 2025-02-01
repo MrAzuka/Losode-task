@@ -1,6 +1,8 @@
 <?php
 
 use App\Http\Controllers\Authentication;
+use App\Http\Controllers\Business;
+use App\Http\Controllers\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -26,4 +28,11 @@ Route::prefix('v1')->group(function () {
 
 Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [Authentication::class, 'logout']);
+    Route::get('/user', [Business::class, 'showBusinessInfo']);
+});
+
+Route::prefix('v1/my/jobs')->middleware('auth:sanctum')->group(function () {
+    Route::post('/', [Job::class, 'createJob']);
+    Route::get('/', [Job::class, 'getAllBusinessJobs']);
+    Route::patch('/{job_id}', [Job::class, 'updateJobs']);
 });
