@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Authentication;
 use App\Http\Controllers\Business;
+use App\Http\Controllers\Guest;
 use App\Http\Controllers\Job;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -37,4 +38,9 @@ Route::prefix('v1/my/jobs')->middleware('auth:sanctum')->group(function () {
     Route::get('/{job_id}/applications', [Job::class, 'getJobApplication']);
     Route::patch('/{job_id}', [Job::class, 'updateJobs']);
     Route::delete('/{job_id}', [Job::class, 'deleteJob']);
+});
+Route::prefix('v1/jobs')->group(function () {
+    Route::get('/', [Guest::class, 'getAllJobs']);
+    Route::get('/{job_id}', [Guest::class, 'getSpecificJob']);
+    Route::post('/{job_id}/apply', [Guest::class, 'applyForJobs']);
 });
