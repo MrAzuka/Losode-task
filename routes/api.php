@@ -34,5 +34,7 @@ Route::prefix('v1')->middleware('auth:sanctum')->group(function () {
 Route::prefix('v1/my/jobs')->middleware('auth:sanctum')->group(function () {
     Route::post('/', [Job::class, 'createJob']);
     Route::get('/', [Job::class, 'getAllBusinessJobs']);
+    Route::get('/{job_id}/applications', [Job::class, 'getJobApplication']);
     Route::patch('/{job_id}', [Job::class, 'updateJobs']);
+    Route::delete('/{job_id}', [Job::class, 'deleteJob']);
 });

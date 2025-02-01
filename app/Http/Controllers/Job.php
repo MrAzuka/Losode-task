@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Guest;
 use Illuminate\Http\Request;
 use App\Models\Job as ModelJob;
 use Illuminate\Support\Facades\Validator;
@@ -102,6 +103,42 @@ class Job extends Controller
 
             $job->update($request->all());
             return $this->sendSuccessResponse(200, 'Job updated successfully', $job);
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(500, 'Server Error. Please try again later', $e->getMessage());
+        }
+    }
+
+    public function getJobApplication(Request $request, $job_id)
+    {
+        try {
+            $job = ModelJob::where('id', $job_id)->where('business_id', $request->user()->id)->first();
+
+            // Check if no jobs found
+            if (empty($job)) {
+                return $this->sendErrorResponse(404, 'No job found');
+            }
+
+            $applicants = Guest::where('job_id', $job_id)->get();
+            if (empty($applicants)) {
+                return $this->sendErrorResponse(404, 'No application found');
+            }
+            return $this->sendSuccessResponse(200, 'Job Applicants fetched successfully', $applicants);
+        } catch (\Throwable $e) {
+            return $this->sendErrorResponse(500, 'Server Error. Please try again later', $e->getMessage());
+        }
+    }
+
+    public function deleteJob(Request $request, $job_id)
+    {
+        try {
+            $job = ModelJob::where('id', $job_id)->where('business_id', $request->user()->id)->first();
+
+            // Check if no jobs found
+            if (empty($job)) {
+                return $this->sendErrorResponse(404, 'No job found');
+            }
+            $job->delete();
+            return $this->sendSuccessResponse(200, 'Job Post deleted');
         } catch (\Throwable $e) {
             return $this->sendErrorResponse(500, 'Server Error. Please try again later', $e->getMessage());
         }

@@ -18,7 +18,8 @@ class Guest extends Model
         'email',
         'phone',
         'location',
-        'cv'
+        'cv',
+        'job_id'
     ];
 
     public function jobs()
