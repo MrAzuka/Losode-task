@@ -12,15 +12,15 @@ class Job extends Controller
     public function createJob(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'title' => 'required',
-            'company' => 'required',
-            'location' => 'required',
-            'category' => 'required',
-            'salary' => 'required',
+            'title' => 'required|string',
+            'company' => 'required|string',
+            'location' => 'required|string',
+            'category' => 'required|string',
+            'salary' => 'required|string',
             'description' => 'required',
-            'benefits' => 'required',
-            'type' => 'required',
-            'work_condition' => 'required'
+            'benefits' => 'required|string',
+            'type' => 'required|string',
+            'work_condition' => 'required|string'
         ]);
 
         if ($validate->fails()) {

@@ -14,7 +14,7 @@ class Authentication extends Controller
     public function register(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'name' => 'required',
+            'name' => 'required|string',
             'email' => 'required|email|unique:business',
             'password' => 'required|min:6'
         ]);

@@ -51,7 +51,7 @@ class Guest extends Controller
             $validate = Validator::make($request->all(), [
                 'first_name' => 'required|string',
                 'last_name' => 'required|string',
-                'email' => 'required|string',
+                'email' => 'required|string|email',
                 'phone' => 'required|string',
                 'location' => 'required|string',
             ]);
